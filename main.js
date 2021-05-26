@@ -77,6 +77,7 @@
 
     self.Bar.prototype = {
         down: function () {
+
             if (this.y <= 300) {
             this.y += this.speed;
             }
@@ -112,6 +113,7 @@
                 var el = this.board.elements[i];
 
                 draw(this.ctx, el);
+
             };
         },
 
