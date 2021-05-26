@@ -87,7 +87,7 @@
             this.y -= this.speed;
             }
         },
-        
+
         toString: function () {
             return "x: " + this.x + " y: " + this.y;
         }
@@ -213,5 +213,4 @@ function controller() {
 
     board_view.play();
     window.requestAnimationFrame(controller);
-
 }
