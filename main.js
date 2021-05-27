@@ -76,8 +76,8 @@
     }
 
     self.Bar.prototype = {
-        down: function () {
 
+        down: function () {
             if (this.y <= 300) {
             this.y += this.speed;
             }
@@ -108,28 +108,28 @@
         clean: function () {
             this.ctx.clearRect(0, 0, this.board.width, this.board.height);
         },
+
         draw: function () {
             for (var i = this.board.elements.length - 1; i >= 0; i--) {
                 var el = this.board.elements[i];
 
                 draw(this.ctx, el);
-
             };
         },
 
         check_collisions: function () {
+
             for (var i = this.board.bars.length - 1; i >= 0; i--) {
                 var bar = this.board.bars[i];
                 if (hit(bar, this.board.ball)) {
                     this.board.ball.collision(bar);
-
                 }
             };
 
             if(this.board.ball.y <= 0){
                 this.board.ball.speed_y = this.board.ball.speed_y * -1;
             }
-
+ 
             if(this.board.ball.y >= 400){
                 this.board.ball.speed_y = this.board.ball.speed_y * -1;
             }
@@ -170,9 +170,10 @@
         switch (element.kind) {
 
             case "rectangle":
+                try {
                 ctx.fillRect(element.x, element.y, element.width, element.height);
+                } catch(error ) { alert(error); }
                 break;
-
             case "circle":
                 ctx.beginPath();
                 ctx.arc(element.x, element.y, element.radio, 0, 7);
@@ -184,11 +185,11 @@
 })();
 
 var board = new Board(800, 400);
-var bar = new Bar(20, 130, 40, 100, board); // Barra derecha
-var bar2 = new Bar(735, 130, 40, 100, board); //Barra izquierda
+var bar = new Bar(20, 140, 40, 100, board); // Barra derecha
+var bar2 = new Bar(735, 140, 40, 100, board); //Barra izquierda
 var canvas = document.getElementById('canvas');
 var board_view = new BoardView(canvas, board);
-var ball = new Ball(350, 100, 10, board);
+var ball = new Ball(400, 200, 10, board);
 
 document.addEventListener("keydown", function (ev) {
 
@@ -215,12 +216,40 @@ document.addEventListener("keydown", function (ev) {
 });
 
 window.requestAnimationFrame(controller);
-setTimeout(function () {
-    ball.direction = -1;
-}, 4000);
+
+var puntosJugador1 = document.getElementById("puntosJugador1");
+var puntosJugador2 = document.getElementById("puntosJugador2");
+
+function reiniciar() {
+    if(ball.x >=800 || ball.x <= 0){
+        if(ball.x >=800){
+            alert("Ganó el jugador 1");
+            puntosJugador1.innerHTML = (Number(puntosJugador1.innerHTML)+1)
+        }
+        if(ball.x <=0){
+            alert("Ganó el jugador 2");
+            puntosJugador2.innerHTML = (Number(puntosJugador2.innerHTML)+1)
+        } 
+        bar.x = 20;
+        bar.y = 140;
+        bar2.x = 735;
+        bar2.y = 140;
+        ball.x = 400;
+        ball.y = 200;
+        ball.direction = 1;
+        ball.bounce_angle = 0;
+        ball.speed_x = 2;
+        ball.speed_y = 0;
+        ball.max_bounce_angle = Math.PI / 12;
+        board.playing = !board.playing;
+    }
+}
 
 function controller() {
 
     board_view.play();
+    board_view.clean();
+    board_view.draw();
     window.requestAnimationFrame(controller);
+    reiniciar();
 }
