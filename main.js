@@ -78,7 +78,7 @@
     self.Bar.prototype = {
 
         down: function () {
-            if (this.y <= 300) {
+            if (this.y <= 300) {   //Condicional para que las barras no suban mas alla que el tablero
             this.y += this.speed;
             }
         },
@@ -126,11 +126,11 @@
                 }
             };
 
-            if(this.board.ball.y <= 0){
+            if(this.board.ball.y <= 0){   //Condicionales para que la pelota rebote en los laterales
                 this.board.ball.speed_y = this.board.ball.speed_y * -1;
             }
  
-            if(this.board.ball.y >= 400){
+            if(this.board.ball.y >= 400){  
                 this.board.ball.speed_y = this.board.ball.speed_y * -1;
             }
         },
@@ -217,7 +217,7 @@ document.addEventListener("keydown", function (ev) {
 
 window.requestAnimationFrame(controller);
 
-var puntosJugador1 = document.getElementById("puntosJugador1");
+var puntosJugador1 = document.getElementById("puntosJugador1"); //Variables que se piden de HTML para utilizarlas para aumentar los puntajes
 var puntosJugador2 = document.getElementById("puntosJugador2");
 
 function reiniciar() {
