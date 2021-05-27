@@ -78,13 +78,13 @@
     self.Bar.prototype = {
 
         down: function () {
-            if (this.y <= 300) {   //Condicional para que las barras no suban mas alla que el tablero
+            if (this.y <= 300) {   //Condicionales para que las barras no transpasen el tablero
             this.y += this.speed;
             }
         },
 
         up: function () {
-            if(this.y >=0) {
+            if(this.y >=0) { //Condicionales para que las barras no transpasen el tablero
             this.y -= this.speed;
             }
         },
@@ -189,25 +189,25 @@ var bar = new Bar(20, 140, 40, 100, board); // Barra derecha
 var bar2 = new Bar(735, 140, 40, 100, board); //Barra izquierda
 var canvas = document.getElementById('canvas');
 var board_view = new BoardView(canvas, board);
-var ball = new Ball(400, 200, 10, board);
+var ball = new Ball(400, 200, 10, board); //Pelota
 
 document.addEventListener("keydown", function (ev) {
 
     if (ev.keyCode == 38) {
         ev.preventDefault();
-        bar.up(); //Flecha Arriba
+        bar2.up(); //W
     }
     else if (ev.keyCode == 40) {
         ev.preventDefault();
-        bar.down(); //Flecha Abajo
+        bar2.down(); //S
     }
     else if (ev.keyCode == 87) {
         ev.preventDefault();
-        bar2.up(); //W
+        bar.up(); //Flecha Arriba
     }
     else if (ev.keyCode == 83) {
         ev.preventDefault();
-        bar2.down(); //S
+        bar.down(); //Flecha Abajo
     }
     else if (ev.keyCode === 32) {
         ev.preventDefault();
@@ -220,7 +220,7 @@ window.requestAnimationFrame(controller);
 var puntosJugador1 = document.getElementById("puntosJugador1"); //Variables que se piden de HTML para utilizarlas para aumentar los puntajes
 var puntosJugador2 = document.getElementById("puntosJugador2");
 
-function reiniciar() {
+function reiniciar() { // Funcion para reiniciar el juego 
     if(ball.x >=800 || ball.x <= 0){
         if(ball.x >=800){
             alert("Ganó el jugador 1");
